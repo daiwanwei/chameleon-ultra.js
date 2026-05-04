@@ -142,7 +142,8 @@
     "mkcert": "mkdir ./mkcert && mkcert -key-file ./mkcert/key.pem -cert-file ./mkcert/cert.pem -ecdsa localhost",
     "publish:test": "npm pack --dry-run",
     "test:ci": "yarn test --run --coverage",
-    "test": "vitest -r ./src --testTimeout 180000"
+    "test": "vitest -r ./src --testTimeout 180000",
+    "prepare": "pnpm run build:js"
   },
   "pnpm": {
     "overrides": {
