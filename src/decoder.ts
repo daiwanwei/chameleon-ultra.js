@@ -343,6 +343,11 @@ export class HidProxScanRes implements HidProxTag {
   }
 
   static fromCmd3002 (buf: Buffer): HidProxScanRes {
+    // Firmware v2.1+ allocates a 16-byte HIDPROX_DATA_SIZE buffer for the scan
+    // response but only fills the first 13 bytes (format/fc/cn/il/oem); the
+    // trailing 3 bytes are zero-init padding. Accept both 13 and 16 byte
+    // payloads; the underlying field layout is identical.
+    if (buf.length === 16) buf = buf.subarray(0, 13)
     bufIsLenOrFail(buf, 13, 'buf')
     return bufUnpackToClass(buf, '!BIBIBH', HidProxScanRes)
   }
